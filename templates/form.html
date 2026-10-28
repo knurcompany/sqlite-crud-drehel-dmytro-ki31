@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Редагування' if item else 'Нова книга' }}</h2>
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+<form method="post">
+<label>Назва<input name="title" required value="{{ item.title or '' }}"></label>
+<label>Автор<input name="author" required value="{{ item.author or '' }}"></label>
+<label>Рік<input name="year" type="number" min="1" max="2100" required value="{{ item.year or '' }}"></label>
+<label>Стан<select name="status">{% for status in statuses %}
+<option {% if item.status == status %}selected{% endif %}>{{ status }}</option>
+{% endfor %}</select></label>
+<button type="submit">Зберегти</button> <a href="{{ url_for('index') }}">Скасувати</a>
+</form>
+{% endblock %}
