@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% block content %}<h1>{{ 'Редагування завдання' if editing else 'Нове завдання' }}</h1>
+{% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+<form class="editor" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Назва<input name="title" required maxlength="120" value="{{ item.title }}"></label>
+<label>Опис<textarea name="description" rows="4" maxlength="2000">{{ item.description }}</textarea></label>
+<label>Стан<select name="status">{% for key,label in statuses.items() %}<option value="{{ key }}"{% if item.status==key %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label>Термін<input type="date" name="due_date" value="{{ item.due_date }}"></label>
+<p><button>Зберегти</button> <a href="{{ url_for('index') }}">Скасувати</a></p></form>{% endblock %}
