@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block content %}
+<header><div><h1>Облік завдань</h1><p>SQLite · {{ items|length }} записів</p></div><a class="button" href="{{ url_for('add') }}">Додати завдання</a></header>
+{% if items %}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Завдання</th><th>Стан</th><th>Термін</th><th>Дії</th></tr></thead><tbody>
+{% for item in items %}<tr><td>{{ item.id }}</td><td><strong>{{ item.title }}</strong><br>{{ item.description }}</td><td>{{ statuses[item.status] }}</td><td>{{ item.due_date or 'Не задано' }}</td><td class="actions"><a href="{{ url_for('edit',item_id=item.id) }}">Редагувати</a><form class="inline" method="post" action="{{ url_for('delete',item_id=item.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="delete">Видалити</button></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p>Завдань поки немає. Додайте перший запис.</p>{% endif %}{% endblock %}
